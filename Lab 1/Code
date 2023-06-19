@@ -1,1 +1,60 @@
+# Q1
+# Opening the file:
+content=open('C:/Users/rosem/Downloads/christ/Semester 3/Data Analytics/bank.csv','r')
 
+# Q2
+# Printing the headers:
+a=content.readline() 
+header=list(a.strip('').split(';'))
+
+for i in header:
+    print(i)
+
+# Q3
+# Finding the count of customers in each category 'marital':
+b=content.readlines()
+
+def count_marital():
+    married=0
+    single=0
+    # incrementing the value for marital status depending on the values:
+    
+    for i in b:
+        count=i.split(';')
+        marital=count[2].strip('"')
+        if marital=="married":
+            married+=1
+        else:
+            single+=1
+    print('Count of married customers: ' + str(married))
+    print('Count of single customers: ' + str(single))
+
+count_marital()
+    
+# Q4
+# Preparing a histogram for age:
+def age_histogram():
+    ages = []
+    
+    for line in b[1:]:
+        customer = line.strip().split(';')
+        age = int(customer[0])  # since index of age 3
+        ages.append(age)
+
+    # Dividing ages into classes of interval 10
+    age_classes = {}
+    
+    for age in ages:
+        age_class = age // 10 * 10
+        if age_class in age_classes:
+            age_classes[age_class] += 1
+        else:
+            age_classes[age_class] = 1
+    print("Histogram for age:")
+    
+    for age_class, count in age_classes.items():
+        print(f"{age_class}-{age_class + 9}: {'|' * count}")
+        
+age_histogram()
+
+content.close()
